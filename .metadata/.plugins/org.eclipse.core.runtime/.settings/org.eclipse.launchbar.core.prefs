@@ -1,8 +1,0 @@
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear (1),org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear
-eclipse.preferences.version=1
-org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear\ (1)/activeLaunchMode=run
-org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear\ (1)/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
-org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:PTV4Gear/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
