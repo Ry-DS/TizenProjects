@@ -1,0 +1,41 @@
+/*(function(){
+		
+})();*/
+
+String.prototype.encodeHex = function () {
+    return this.split('').map(e => e.charCodeAt())
+};
+
+String.prototype.decodeHex = function () {    
+    return this.map(e => String.fromCharCode(e)).join('')
+};
+
+function accessPtv(uri){
+	let auth={id: 3000927, key: 'd43e73b1-15b5-4a83-87d5-22b1ba13524e'};
+	let base='http://timetableapi.ptv.vic.gov.au';
+	
+	let uriWithId=uri;
+	if(uri.includes('?')){
+		uriWithId+='&';
+	}else uriWithId+='?';
+	
+	uriWithId+='devid='+auth.id;
+	
+	let signature=hmacsha1(auth.key,uriWithId.encodeHex());
+	
+	let finalUrl=base+uriWithId+'&signature='+signature.decodeHex();
+	console.log(finalUrl);
+	
+	  $.ajax({
+          type: "GET",
+          url: 'http://timetableapi.ptv.vic.gov.au/v3/stops/location/-37.893910,144.700790?max_results=10&devid=3000927&signature=CC1F2D89805698CF53D306FC526F32AC878DCF7C', // Server URL
+          success: function (data) {
+                console.log(JSON.stringify(data)); // Server data in String format
+                console.log(data); // Server data in JSON format
+           }
+     });
+	
+	
+	
+	
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>PTV</title>
+	<link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.css">
+	<link rel="stylesheet" media="all" href="lib/tau/wearable/theme/default/tau.circle.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" media="all" href="css/style.circle.css">
+</head>
+<body>
+	<div class="ui-page ui-page-active" id="main">
+		<header class="ui-header ui-header-smaller">
+		<h2 class="ui-title">Welcome to PTV</h2>
+	</header>
+	<div class="ui-content">
+		<ul class="ui-listview">
+			<li class="ui-listview-divider" id="nearbyList">Nearby</li>
+			<li class="ui-li-grid">
+					<div>Finding your Location</div>
+					<div class="ui-processing"></div>
+				</li>
+			
+			<li class="li-has-multiline li-has-thumb-left">
+					<a href="contents/PTV/select_route.html">Williams Landing
+					<span class="ui-li-sub-text li-text-sub">Bus stop in</span>
+					<span class="ui-li-sub-text li-text-sub">xxxx</span>
+					<img src="../../../css/images/PTV/ptv_bus.png" class="ui-li-thumb-left">
+					</a>
+			</li>
+			
+			<li class="li-has-multiline li-has-thumb-left">
+					<a href="index-old.html">Open Elements
+					<span class="ui-li-sub-text li-text-sub">Bus stop in</span>
+					<span class="ui-li-sub-text li-text-sub">xxxx</span>
+					<img src="../../../css/images/PTV/ptv_train.png" class="ui-li-thumb-left">
+					</a>
+			</li>
+				
+		</ul>
+	</div>
+	</div>
+	<script type="text/javascript">
+	 function reloadJs(src) {
+    src = $('script[src$="' + src + '"]').attr("src");
+    $('script[src$="' + src + '"]').remove();
+    $('<script/>').attr('src', src).appendTo('body');
+    }
+</script>
+	<script src="js/circle-helper.js"></script>
+	<script src="lib/jquery.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/lowBatteryCheck.js"></script>
+	<script src="lib/tau/wearable/js/tau.js"></script>
+	<script src="lib/jsSHA/sha1.js"></script>
+	<script src="js/ptv.js"></script>
+	<script src="js/location.js"></script>
+	
+</body>
+</html>

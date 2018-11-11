@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+	<title>View Route</title>
+	<link rel="stylesheet" href="../../lib/tau/wearable/theme/default/tau.css">
+	<link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)" href="../../lib/tau/wearable/theme/default/tau.circle.min.css">
+	<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+	<div class="ui-page">
+		<header class="ui-header">
+			<h2 class="ui-title" id="sel-route-title">Viewing Route</h2>
+		</header>
+		<div class="ui-content">
+			<ul class="ui-listview">
+				<li class="li-has-multiline li-has-thumb-left" id="road-list">
+					Road Name
+					<span class="ui-li-sub-text li-text-sub">Arriving at</span>
+					<span class="ui-li-sub-text li-text-sub">xxxx</span>
+					<img src="../../../css/images/PTV/bus/icn_jour_bus_mid.9.png" class="ui-li-thumb-left">
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script src="../../lib/tau/wearable/js/tau.js"></script>
+<script>
+navigator.geolocation.getCurrentLocation((data)=>{
+$('#road-list').text(data.coords.latitude+' '+data.coords.longitude);
+},()=>{
+$('#road-list').text('Cannot get location!');
+});
+
+</script>
+</html>

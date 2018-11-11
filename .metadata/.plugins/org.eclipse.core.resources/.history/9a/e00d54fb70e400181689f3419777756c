@@ -1,0 +1,10 @@
+setInterval(()=>{
+			navigator.geolocation.getCurrentPosition((pos)=>{
+			$('showLocation').html('Your location <span class=\"ui-li-sub-text li-text-sub\">'+pos.coords.latitude+' '+pos.coords.longitude+'</span>');
+			
+			},()=>{
+				$('showLocation').html('Your location
+					<span class=\"ui-li-sub-text li-text-sub\">Failed</span>');
+			},{timeout: 9000});
+		
+		},10000);
