@@ -1,15 +1,27 @@
-var DATA = 
-[
-  /* {NAME:"Nearby", CLASSES:["ui-listview-divider"], HTML:"Nearby"},*/
-   {NAME:"Williams Landing",CLASSES:["li-has-multiline","li-has-thumb-left"],HTML:"<a href=\"contents/PTV/select_route.html\">Williams Landing\
-					<span class=\"ui-li-sub-text li-text-sub\">Bvvvvvvus stop in</span>\
-					<span class=\"ui-li-sub-text li-text-sub\">xxxx</span>\
-					<img src=\"../../../css/images/PTV/ptv_bus.png\" class=\"ui-li-thumb-left\">\
-					</a>"},
-   {NAME:"Open Elements",CLASSES:["li-has-multiline","li-has-thumb-left"],HTML:"<a href=\"index-old.html\">Open Elements\
-					<span class=\"ui-li-sub-text li-text-sub\">Bus stgggggop in</span>\
-					<span class=\"ui-li-sub-text li-text-sub\">xxxx</span>\
-					<img src=\"../../../css/images/PTV/ptv_train.png\" class=\"ui-li-thumb-left\">\
-					</a>"}
-   /* Other list items */
-]
+const ROUTE_TYPES =
+    [{name: 'Train', img: 'ptv_train.png'}
+        , {name: 'Tram', img: 'ptv_tram.png'}
+        , {name: 'Bus', img: 'ptv_bus.png'}
+        , {name: 'VLine', img: 'ptv_regtrain.png'}
+        , {name: 'Night Bus', img: 'ptv_regbus.png'}];
+
+var NEARBY_DATA = [];
+
+function addStop(stop) {
+    stop['html'] = ptv_html_util.parseStopHtml(stop);
+    NEARBY_DATA.push(stop);
+
+}
+
+var ptv_html_util = {
+    parseStopHtml:
+        function ({stop_name, stop_suburb, route_type}) {
+            return '<li class=\"li-has-multiline li-has-thumb-left\">\
+            <a href=\"contents/PTV/select_route.html\">${stop_name}\
+                    <span class=\"ui-li-sub-text li-text-sub\">in</span>\
+					<span class=\"ui-li-sub-text li-text-sub\">${stop_suburb}</span>\
+					<img src=\"../../../css/images/PTV/' + ROUTE_TYPES[route_type] + '\" class=\"ui-li-thumb-left\">\
+			</a>\
+            </li>';
+        }
+};

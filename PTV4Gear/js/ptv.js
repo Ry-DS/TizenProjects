@@ -2,8 +2,9 @@
 		
 })();*/
 
-
-function accessPtv(uri,onSucess){
+var ptv = {
+    accessPtv:
+        function (uri, onSucess) {
 	let auth={id: 3000927, key: 'd43e73b1-15b5-4a83-87d5-22b1ba13524e'};
 	let base='http://timetableapi.ptv.vic.gov.au';
 	
@@ -35,8 +36,16 @@ function accessPtv(uri,onSucess){
                 onSucess(data);
            }
      });
-	
-	
-	
-	
-}
+
+
+        },
+    populateNearby:
+        function ({latitude, longitude}) {
+            this.accessPtv('/v3/stops/location/${latitude},${longitude}?max_results=10', () => {
+
+
+            });
+
+        }
+
+};
