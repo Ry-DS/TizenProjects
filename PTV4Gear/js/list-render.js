@@ -19,7 +19,7 @@ vlist.setListItemUpdater(function(elListItem, newIndex) {
    data.CLASSES.forEach((s)=>elListItem.classList.add(s));
    
 });
-vlist.draw();
+//vlist.draw();
 
 });
 

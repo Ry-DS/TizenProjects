@@ -1,6 +1,6 @@
 var DATA = 
 [
-   {NAME:"Nearby", CLASSES:["ui-listview-divider"], HTML:"Nearby"},
+  /* {NAME:"Nearby", CLASSES:["ui-listview-divider"], HTML:"Nearby"},*/
    {NAME:"Williams Landing",CLASSES:["li-has-multiline","li-has-thumb-left"],HTML:"<a href=\"contents/PTV/select_route.html\">Williams Landing\
 					<span class=\"ui-li-sub-text li-text-sub\">Bvvvvvvus stop in</span>\
 					<span class=\"ui-li-sub-text li-text-sub\">xxxx</span>\
