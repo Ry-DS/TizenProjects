@@ -24,7 +24,8 @@ document.addEventListener("pageshow", function () {
 				loop();
 
             };//add refresh button
-            ptv.populateNearby();//ask ptv to populate nearbyList with global coords
+            ptv.populateNearby(coords);//ask ptv to populate nearbyList with global coords
+
 			
 			
 		

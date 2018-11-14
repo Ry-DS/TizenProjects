@@ -4,7 +4,7 @@
 
 var ptv = {
     accessPtv:
-        function (uri, onSucess) {
+        function (uri, onResult) {
 	let auth={id: 3000927, key: 'd43e73b1-15b5-4a83-87d5-22b1ba13524e'};
 	let base='http://timetableapi.ptv.vic.gov.au';
 	
@@ -33,16 +33,24 @@ var ptv = {
           success: function (data) {
                 console.log(JSON.stringify(data)); // Server data in String format
                 console.log(data); // Server data in JSON format
-                onSucess(data);
-           }
+              onResult(data);
+          },
+          error: function () {
+              onResult();
+          }
      });
 
 
         },
     populateNearby:
         function ({latitude, longitude}) {
-            this.accessPtv('/v3/stops/location/${latitude},${longitude}?max_results=10', () => {
-
+            this.accessPtv(`/v3/stops/location/${latitude},${longitude}?max_results=10`, (data) => {
+                if (data && data.stops) {
+                    data.stops.forEach(stop => ptv_data_util.addNearbyStop(stop));
+                    ptv_data_util.renderNearbyStops('nearbyList');
+                } else listEdit.edit('nearbyList', () => {
+                    $('#nearbyList').append("<li>No Internet</li>")
+                });
 
             });
 
