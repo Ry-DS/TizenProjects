@@ -14,7 +14,13 @@ function (id){
 },
 	after:
 function (id){
-	tau.widget.Listview(document.getElementById(id))
+		let marquees=document.getElementsByClassName('ui-marquee');
+		for(let el of marquees){
+			new tau.widget.Marquee(el, {marqueeStyle: "scroll", delay: "3000"}).start();
+		}
+		tau.widget.Listview(document.getElementById(id));
+	
+	
 },
 	edit:
 function(id,editFunc){
@@ -22,7 +28,7 @@ function(id,editFunc){
 		setTimeout(()=>{
 			editFunc();
 			this.after(id);
-		},50);
+		},100);
 }
 
 }

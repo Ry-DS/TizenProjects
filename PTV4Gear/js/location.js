@@ -10,11 +10,10 @@ document.addEventListener("pageshow", function () {
 
         $('#refreshNearby').remove();//remove refresh button if there
 		listEdit.edit('nearbyList',()=>
-		list.append('<li class=\"ui-li-grid\"> <a href=\"index-old.html\"><div>Locating</div></a> <div class=\"ui-processing\"></div></li>'
+		list.append('<li class=\"ui-li-grid\"> <a href=\"index-old.html\"><div class=\"ui-marquee\">Finding gggggg Locating</div></a> <div class=\"ui-processing\"></div></li>'
 				));//processing animation
 
-
-        navigator.geolocation.getCurrentPosition((pos) => {//start trying to locate
+		let sucessful=(pos) => {//start trying to locate
             coords = pos.coords;//store if sucessfull for PTV api
 			
 			$('#main').append('<footer class=\"ui-footer ui-bottom-button ui-fixed\">\
@@ -29,15 +28,18 @@ document.addEventListener("pageshow", function () {
 			
 			
 		
-		},()=>{
+		};
+        navigator.geolocation.getCurrentPosition(sucessful,()=>{
 
-            listEdit.edit('nearbyList', () =>//add fail message
+            /*listEdit.edit('nearbyList', () =>//add fail message
 				list.append('<li class=\"li-has-multiline\">No Location<span class=\"ui-li-sub-text li-text-sub\">Retrying in 5 seconds...</span></li>'
 						));
 				
 		
 			
-			setTimeout(loop,5000);
+			setTimeout(loop,5000);*/
+        	coords={coords: {latitude: -37.893910,longitude: 144.700790}};
+        	sucessful(coords);
         }, {timeout: 15000});
 		
 	};
