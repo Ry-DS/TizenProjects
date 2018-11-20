@@ -34,7 +34,7 @@ var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
     parseNearbyStopHtml:
         function ({stop_name, stop_suburb, route_type, stop_id}) {
             return `<li class=\"li-has-multiline li-has-thumb-left\">\
-            <a href=\"contents/PTV/select_route.html\" id=\"nearby_` + stop_id + `\">${stop_name}\
+            <a href=\"contents/PTV/select_route.html\" id=\"nearby_` + stop_id + `\"><div class=\"ui-marquee marquee\">${stop_name}</div>\
                     <span class=\"ui-li-sub-text li-text-sub\">in</span>\
 					<span class=\"ui-li-sub-text li-text-sub\">${stop_suburb}</span>\
 					<img src=\"../../../css/images/PTV/` + ROUTE_TYPES[route_type].img + `\" class=\"ui-li-thumb-left\">\

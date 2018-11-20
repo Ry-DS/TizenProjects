@@ -19,6 +19,7 @@ function (id){
 			new tau.widget.Marquee(el, {marqueeStyle: "scroll", delay: "3000"}).start();
 		}
 		tau.widget.Listview(document.getElementById(id));
+		$('.marquee').marquee();
 	
 	
 },
