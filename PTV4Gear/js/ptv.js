@@ -75,8 +75,8 @@ var ptv = {
                     }
                     if(found)
                         continue;
-                    if (seenRoutes.includes([dep.route_id,dep.direction_id]) /*|| new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
-                        : dep.scheduled_departure_utc) < currentDate*/)
+                    if (new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
+                        : dep.scheduled_departure_utc) < currentDate)
                         continue;
                     nearbyStop.latest_routes.push(dep);
                     seenRoutes.push([dep.route_id,dep.direction_id]);

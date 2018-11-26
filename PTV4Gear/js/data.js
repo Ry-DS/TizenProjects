@@ -31,8 +31,9 @@ var ptv_data_util = {
                         SELECTED_NEARBY_STOP = stop;
                         setTimeout(()=>{
                         	listEdit.edit('routeList',()=>{});
-                        ptv.populateRoutes(stop);
-                        },500);
+                        	setTimeout(()=>{ptv.populateRoutes(stop);},250);
+                        
+                        },250);
                         
                         return true;//still go to the next page
                     }
@@ -75,9 +76,7 @@ var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
             let routeName=ROUTE_NAMES[route.route_id].route.route_name;
             let routeNumber=ROUTE_NAMES[route.route_id].route.route_number;
             let departureTime=new Date(route.estimated_departure_utc===null?route.scheduled_departure_utc:route.estimated_departure_utc);
-            let isPm=departureTime.getHours()>12;
-            let departureTimeString=(isPm?departureTime.getHours()-12:departureTime.getHours())+
-                ":"+departureTime.getMinutes()+(isPm?"PM":"AM");
+            let departureTimeString=departureTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
 
             return `<li class=\"li-has-multiline li-has-thumb-left\">\

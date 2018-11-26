@@ -10,7 +10,7 @@ document.addEventListener("pageshow", function () {
 
         $('#refreshNearby').remove();//remove refresh button if there
         listEdit.edit('nearbyList', () => {
-            list.append('<li class=\"ui-li-grid\"> <a href=\"index-old.html\"><div class=\"ui-marquee\">Locating</div></a> <div class=\"ui-processing\"></div></li>'
+        	$("#nearbyList>li:nth-child(1)").after('<li class=\"ui-li-grid\"> <a href=\"index-old.html\"><div class=\"ui-marquee\">Locating</div></a> <div class=\"ui-processing\"></div></li>'
             );
 
 
@@ -23,6 +23,7 @@ document.addEventListener("pageshow", function () {
 					<button class=\"ui-btn\" id=\"refreshNearby\">Refresh</button>\
 					</footer>');
             document.getElementById('refreshNearby').onclick = () => {
+            	NEARBY_DATA=[];
                 loop();
 
             };//add refresh button
@@ -32,16 +33,16 @@ document.addEventListener("pageshow", function () {
         };
         navigator.geolocation.getCurrentPosition(sucessful, () => {
 
-            /*listEdit.edit('nearbyList', () =>//add fail message
+            listEdit.edit('nearbyList', () =>//add fail message
                  list.append('<li class=\"li-has-multiline\">No Location<span class=\"ui-li-sub-text li-text-sub\">Retrying in 5 seconds...</span></li>'
                          ));
 
 
 
-             setTimeout(loop,5000);*/
-            coords = {coords: {latitude: -37.883168, longitude: 144.700788}};//test coords in hoppers crossing with bus and train
-            sucessful(coords);
-        }, {timeout: 5000});
+             setTimeout(loop,5000);
+            /*coords = {coords: {latitude: -37.883168, longitude: 144.700788}};//test coords in hoppers crossing with bus and train
+            sucessful(coords); *///Testing Only
+        }, {timeout: 10000});
 
     };
     loop();
