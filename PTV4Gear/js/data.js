@@ -6,13 +6,20 @@ const ROUTE_TYPES =
         , {name: 'Night Bus', img: 'ptv_regbus.png'}];
 
 var NEARBY_DATA = [];
+var ROUTE_NAMES = [];
 var SELECTED_NEARBY_STOP;
 var ptv_data_util = {
     addNearbyStop:
         function (stop) {
-            stop['html'] = ptv_html_util.parseNearbyStopHtml(stop);
+            stop.html = ptv_html_util.parseNearbyStopHtml(stop);
             NEARBY_DATA.push(stop);
 
+        },
+    addRoutes:
+        function(stop){
+            stop.latest_routes.forEach(route=>{
+                route.html=ptv_html_util.parseRouteHtml(route);
+            })
         },
     renderNearbyStops:
         function (id) {
@@ -40,5 +47,10 @@ var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
 					<img src=\"../../../css/images/PTV/` + ROUTE_TYPES[route_type].img + `\" class=\"ui-li-thumb-left\">\
 			</a>\
             </li>`;
+        },
+    parseRouteHtml:
+        function(route){
+            let routeName=ROUTE_NAMES[route.route_id];
+
         }
 };
