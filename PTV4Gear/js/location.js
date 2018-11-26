@@ -41,7 +41,7 @@ document.addEventListener("pageshow", function () {
              setTimeout(loop,5000);*/
             coords = {coords: {latitude: -37.883168, longitude: 144.700788}};//test coords in hoppers crossing with bus and train
             sucessful(coords);
-        }, {timeout: 15000});
+        }, {timeout: 5000});
 
     };
     loop();

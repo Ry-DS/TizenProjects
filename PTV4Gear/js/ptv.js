@@ -25,13 +25,13 @@ var ptv = {
             //end hashing
 
             let finalUrl = base + uriWithId + '&signature=' + signature.toUpperCase();
-            console.log(finalUrl);
+           // console.log(finalUrl);
 
             $.ajax({
                 type: "GET",
                 url: finalUrl, // Server URL
                 success: function (data) {
-                    console.log(JSON.stringify(data)); // Server data in String format
+                    //console.log(JSON.stringify(data)); // Server data in String format
                     console.log(data); // Server data in JSON format
                     onResult(data);
                 },
@@ -65,25 +65,44 @@ var ptv = {
                 let seenRoutes = [];
                 let currentDate = new Date();
                 for (let dep of data.departures) {
-                    if (seenRoutes.includes(dep.route_id) || new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
-                        : dep.scheduled_departure_utc) < currentDate)
+                    let found=false;
+                    for(let seen of seenRoutes){
+                        if(seen.toString()===[dep.route_id,dep.direction_id].toString()){
+                            found=true;
+                            break;
+                        }
+
+                    }
+                    if(found)
+                        continue;
+                    if (seenRoutes.includes([dep.route_id,dep.direction_id]) /*|| new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
+                        : dep.scheduled_departure_utc) < currentDate*/)
                         continue;
                     nearbyStop.latest_routes.push(dep);
-                    seenRoutes.push(dep.route_id);
+                    seenRoutes.push([dep.route_id,dep.direction_id]);
 
                 }
+                console.log(seenRoutes);
                 for(let seen of seenRoutes){
-                    if(ROUTE_NAMES[seen]===undefined){
-                        this.accessPtv(`/v3/routes/${seen}`,result=>{
-                            ROUTE_NAMES[seen]=result;
+                    if(ROUTE_NAMES[seen[0]]===undefined){
+                        this.accessPtv(`/v3/routes/${seen[0]}`,result=>{
+                            ROUTE_NAMES[seen[0]]=result;
+                            
 
+                        });
+                    }
+                    if(DIRECTION_NAMES[seen[0]]===undefined){
+                        this.accessPtv(`/v3/directions/route/${seen[0]}`,result=>{
+                           DIRECTION_NAMES[seen[0]]=result;
                         });
                     }
                 }
                 $(document).ajaxStop(function () {//after all internet calls finished
                     $(this).unbind("ajaxStop");
-                    this.tryPopulate(true,()=>{
+                    ptv_data_util.addRoutes(SELECTED_NEARBY_STOP);
 
+                    ptv.tryPopulate(true,()=>{
+                        ptv_data_util.renderRoutes('routeList');
                     },()=>true,'routeList');
 
                 });

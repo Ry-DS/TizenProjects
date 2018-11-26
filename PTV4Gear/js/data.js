@@ -7,6 +7,7 @@ const ROUTE_TYPES =
 
 var NEARBY_DATA = [];
 var ROUTE_NAMES = [];
+var DIRECTION_NAMES = [];//mapped to routes
 var SELECTED_NEARBY_STOP;
 var ptv_data_util = {
     addNearbyStop:
@@ -25,15 +26,36 @@ var ptv_data_util = {
         function (id) {
             listEdit.edit(id, () => {
                 NEARBY_DATA.forEach(stop => {
-                    $('#nearbyList').append(stop.html);
+                    $('#'+id).append(stop.html);
                     document.getElementById('nearby_' + stop.stop_id).onclick = () => {
                         SELECTED_NEARBY_STOP = stop;
+                        setTimeout(()=>{
+                        	listEdit.edit('routeList',()=>{});
+                        ptv.populateRoutes(stop);
+                        },500);
+                        
                         return true;//still go to the next page
                     }
 
                 })
             });
         },
+    renderRoutes:
+        function(id){
+        listEdit.edit(id,()=>{
+            SELECTED_NEARBY_STOP.latest_routes.forEach(rt=>{
+                $('#'+id).append(rt.html);
+            });});
+        },
+    findDirection:
+        function(route_id,direction_id){
+            let direction=DIRECTION_NAMES[route_id];
+            for(dir of direction.directions){
+                if(dir.direction_id===direction_id)
+                    return dir;
+            }
+            return null;
+        }
 
 };
 
@@ -50,7 +72,23 @@ var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
         },
     parseRouteHtml:
         function(route){
-            let routeName=ROUTE_NAMES[route.route_id];
+            let routeName=ROUTE_NAMES[route.route_id].route.route_name;
+            let routeNumber=ROUTE_NAMES[route.route_id].route.route_number;
+            let departureTime=new Date(route.estimated_departure_utc===null?route.scheduled_departure_utc:route.estimated_departure_utc);
+            let isPm=departureTime.getHours()>12;
+            let departureTimeString=(isPm?departureTime.getHours()-12:departureTime.getHours())+
+                ":"+departureTime.getMinutes()+(isPm?"PM":"AM");
+
+
+            return `<li class=\"li-has-multiline li-has-thumb-left\">\
+            <a href=\"contents/PTV/select_route.html\" id=\"route_` + route.route_id + `\"><div class=\"ui-marquee marquee\">${routeName}</div>\
+                    <span class=\"ui-li-sub-text li-text-sub\">Next at: ${departureTimeString}</span>\
+					<span class=\"ui-li-sub-text li-text-sub marquee\">Towards `+ptv_data_util.findDirection(route.route_id,route.direction_id).direction_name+`</span>\
+					<span class=\"ui-li-sub-text li-text-sub\">`+(routeNumber?`Route ${routeNumber}`:``)+`</span>\
+					<img src=\"../../../css/images/PTV/` + ROUTE_TYPES[SELECTED_NEARBY_STOP.route_type].img + `\" class=\"ui-li-thumb-left\">\
+			</a>\
+            </li>`;
+
 
         }
 };
