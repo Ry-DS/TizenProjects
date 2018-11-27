@@ -10,20 +10,31 @@
 <body>
 	<div class="ui-page">
 		<header class="ui-header">
-			<h2 class="ui-title">Select a Route</h2>
+			<h2 class="ui-title">Routes</h2>
 		</header>
 		<div class="ui-content">
-			<ul class="ui-listview">
-				<li class="li-has-multiline">
-					<a href="see_times.html">To xxxx
-					<span class="ui-li-sub-text li-text-sub">Route 999</span>
-					<span class="ui-li-sub-text li-text-sub">xxx - xxx</span>
-					<span class="ui-li-sub-text li-text-sub">Dep. at: xx:xx</span>
-					</a>
+			<ul class="ui-listview" id="routeList">
+			<li class="ui-li-grid">
+				<a href="index-old.html">
+					<div class="ui-marquee">Processing</div></a>
+					<div class="ui-processing"></div>
+				</li>
+				<li class="ui-li-grid">
+				
+				</li>
+				<li class="ui-li-grid">
+				
+				</li>
+				<li class="ui-li-grid">
+				
 				</li>
 			</ul>
 		</div>
 	</div>
 </body>
 <script src="../../lib/tau/wearable/js/tau.js"></script>
+<script>
+ptv.populateRoutes(SELECTED_NEARBY_STOP);
+
+</script>
 </html>

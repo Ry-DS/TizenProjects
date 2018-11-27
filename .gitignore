@@ -128,4 +128,7 @@ local.properties
 hs_err_pid*
 
 ## Project specific ##
-
+Notes/
+Calculator/
+*.wgt
+PTV4Gear/.sign
