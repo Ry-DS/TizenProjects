@@ -1,7 +1,7 @@
 /*(function(){
 
 })();*/
-
+"use strict";
 var ptv = {
     accessPtv:
         function (uri, onResult) {
@@ -43,8 +43,8 @@ var ptv = {
 
         },
     populateNearby:
-        function ({latitude, longitude}) {
-            this.accessPtv(`/v3/stops/location/${latitude},${longitude}?max_results=10`, (data) => {
+        function (coords) {
+            this.accessPtv(`/v3/stops/location/${coords.latitude},${coords.longitude}?max_results=10`, (data) => {
 
                 this.tryPopulate(data, data => {
                     data.stops.forEach(stop => ptv_data_util.addNearbyStop(stop));
@@ -63,40 +63,50 @@ var ptv = {
                 nearbyStop.departures = data.departures;
                 nearbyStop.latest_routes = [];
                 let seenRoutes = [];
+                let seenDirections=[];
                 let currentDate = new Date();
-                for (let dep of data.departures) {
-                    let found=false;
-                    for(let seen of seenRoutes){
-                        if(seen.toString()===[dep.route_id,dep.direction_id].toString()){
-                            found=true;
-                            break;
-                        }
+                
+                for (var i = 0, len = data.departures.length; i < len; i++) {
+                	let dep=data.departures[i];
+                	  let found=false;
+                     
+                      for (var i = 0, len = seenRoutes.length; i < len; i++) {
+                    	  if(seenRoutes[i]===dep.route_id&&seenDirections[i]===dep.direction_id){
+                              found=true;
+                              break;
+                          }
 
-                    }
-                    if(found)
-                        continue;
-                    if (new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
-                        : dep.scheduled_departure_utc) < currentDate)
-                        continue;
-                    nearbyStop.latest_routes.push(dep);
-                    seenRoutes.push([dep.route_id,dep.direction_id]);
+                      }
+                      
+                      
+                      if(found)
+                          continue;
+                      /*if (new Date(dep.estimated_departure_utc != null ? dep.estimated_departure_utc
+                          : dep.scheduled_departure_utc) < currentDate)
+                          continue;*/
+                      nearbyStop.latest_routes.push(dep);
+                      seenRoutes.push(dep.route_id);
+                      seenDirections.push(dep.direction_id);
 
                 }
                 console.log(seenRoutes);
-                for(let seen of seenRoutes){
-                    if(ROUTE_NAMES[seen[0]]===undefined){
-                        this.accessPtv(`/v3/routes/${seen[0]}`,result=>{
-                            ROUTE_NAMES[seen[0]]=result;
+               
+                for (var i = 0, len = seenRoutes.length; i < len; i++) {
+                	let seen=seenRoutes[i];
+                	if(ROUTE_NAMES[seen]===undefined){
+                        this.accessPtv(`/v3/routes/${seen}`,result=>{
+                            ROUTE_NAMES[seen]=result;
                             
 
                         });
                     }
-                    if(DIRECTION_NAMES[seen[0]]===undefined){
-                        this.accessPtv(`/v3/directions/route/${seen[0]}`,result=>{
-                           DIRECTION_NAMES[seen[0]]=result;
+                    if(DIRECTION_NAMES[seen]===undefined){
+                        this.accessPtv(`/v3/directions/route/${seen}`,result=>{
+                           DIRECTION_NAMES[seen]=result;
                         });
                     }
                 }
+                
                 $(document).ajaxStop(function () {//after all internet calls finished
                     $(this).unbind("ajaxStop");
                     ptv_data_util.addRoutes(SELECTED_NEARBY_STOP);

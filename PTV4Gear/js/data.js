@@ -1,3 +1,4 @@
+"use strict";
 const ROUTE_TYPES =
     [{name: 'Train', img: 'ptv_train.png'}
         , {name: 'Tram', img: 'ptv_tram.png'}
@@ -51,23 +52,23 @@ var ptv_data_util = {
     findDirection:
         function(route_id,direction_id){
             let direction=DIRECTION_NAMES[route_id];
-            for(dir of direction.directions){
-                if(dir.direction_id===direction_id)
-                    return dir;
-            }
-            return null;
+            for (var i = 0, len = direction.directions.length; i < len; i++) {
+            	 if(direction.directions[i].direction_id===direction_id)
+                     return direction.directions[i];
+             }
+             return null;
         }
 
 };
 
 var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
     parseNearbyStopHtml:
-        function ({stop_name, stop_suburb, route_type, stop_id}) {
+        function (route) {
             return `<li class=\"li-has-multiline li-has-thumb-left\">\
-            <a href=\"contents/PTV/select_route.html\" id=\"nearby_` + stop_id + `\"><div class=\"ui-marquee marquee\">${stop_name}</div>\
+            <a href=\"contents/PTV/select_route.html\" id=\"nearby_` + route.stop_id + `\"><div class=\"ui-marquee marquee\">${route.stop_name}</div>\
                     <span class=\"ui-li-sub-text li-text-sub\">in</span>\
-					<span class=\"ui-li-sub-text li-text-sub\">${stop_suburb}</span>\
-					<img src=\"../../../css/images/PTV/` + ROUTE_TYPES[route_type].img + `\" class=\"ui-li-thumb-left\">\
+					<span class=\"ui-li-sub-text li-text-sub\">${route.stop_suburb}</span>\
+					<img src=\"css/images/PTV/` + ROUTE_TYPES[route.route_type].img + `\" class=\"ui-li-thumb-left\">\
 			</a>\
             </li>`;
         },
@@ -84,7 +85,7 @@ var ptv_html_util = {//<!--href="contents/PTV/select_route.html"-->
                     <span class=\"ui-li-sub-text li-text-sub\">Next at: ${departureTimeString}</span>\
 					<span class=\"ui-li-sub-text li-text-sub marquee\">Towards `+ptv_data_util.findDirection(route.route_id,route.direction_id).direction_name+`</span>\
 					<span class=\"ui-li-sub-text li-text-sub\">`+(routeNumber?`Route ${routeNumber}`:``)+`</span>\
-					<img src=\"../../../css/images/PTV/` + ROUTE_TYPES[SELECTED_NEARBY_STOP.route_type].img + `\" class=\"ui-li-thumb-left\">\
+					<img src=\"../../css/images/PTV/` + ROUTE_TYPES[SELECTED_NEARBY_STOP.route_type].img + `\" class=\"ui-li-thumb-left\">\
 			</a>\
             </li>`;
 

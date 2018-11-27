@@ -1,3 +1,4 @@
+"use strict";
 var listEdit={
 	ready:
 function(id){
@@ -15,9 +16,11 @@ function (id){
 	after:
 function (id){
 		let marquees=document.getElementsByClassName('ui-marquee');
-		for(let el of marquees){
-			new tau.widget.Marquee(el, {marqueeStyle: "scroll", delay: "3000"}).start();
-		}
+		
+		for (var i = 0, len = marquees.length; i < len; i++) {
+			new tau.widget.Marquee(marquees[i], {marqueeStyle: "scroll", delay: "3000"}).start();
+		}	
+		
 		tau.widget.Listview(document.getElementById(id));
 		$('.marquee').marquee();
 	

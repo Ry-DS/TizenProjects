@@ -1,3 +1,4 @@
+"use strict";
 var coords; //global coords var. Should have coords of user if found
 var running = false;
 document.addEventListener("pageshow", function () {
